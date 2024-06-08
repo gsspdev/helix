@@ -92,7 +92,8 @@ impl KeyEvent {
     ///
     /// let k = KeyEvent::from_str(" ").unwrap().key_sequence_format();
     /// assert_eq!(k, "<space>");
-    /// ```
+    /// 
+    /// let k = KeyEvent::from_str("{").unwrap().key_sequence_format();```
     pub fn key_sequence_format(&self) -> String {
         let s = self.to_string();
         if s.graphemes(true).count() > 1 {
@@ -157,6 +158,9 @@ pub(crate) mod keys {
     pub(crate) const RIGHT_META: &str = "rightmeta";
     pub(crate) const ISO_LEVEL_3_SHIFT: &str = "isolevel3shift";
     pub(crate) const ISO_LEVEL_5_SHIFT: &str = "isolevel5shift";
+
+    pub(crate) const LEFT_BRACKET: &str = "lbracket";
+    pub(crate) const RIGHT_BRACKET: &str = "rbracket";
 }
 
 impl fmt::Display for KeyEvent {
@@ -199,6 +203,13 @@ impl fmt::Display for KeyEvent {
             KeyCode::Char('-') => f.write_str(keys::MINUS)?,
             KeyCode::Char('<') => f.write_str(keys::LESS_THAN)?,
             KeyCode::Char('>') => f.write_str(keys::GREATER_THAN)?,
+
+            KeyCode::Char('[') => f.write_str(keys::LEFT_BRACKET)?,
+            KeyCode::Char(']') => f.write_str(keys::RIGHT_BRACKET)?,
+
+            // KeyCode::Char('{') => f.write_str(keys::LEFT_BRACE)?,
+            // KeyCode::Char('}') => f.write_str(keys::RIGHT_BRACE)?,
+
             KeyCode::F(i) => f.write_fmt(format_args!("F{}", i))?,
             KeyCode::Char(c) => f.write_fmt(format_args!("{}", c))?,
             KeyCode::CapsLock => f.write_str(keys::CAPS_LOCK)?,
@@ -598,6 +609,7 @@ mod test {
             }
         );
 
+
         assert_eq!(
             str::parse::<KeyEvent>(",").unwrap(),
             KeyEvent {
@@ -658,6 +670,38 @@ mod test {
             str::parse::<KeyEvent>("+").unwrap(),
             KeyEvent {
                 code: KeyCode::Char('+'),
+                modifiers: KeyModifiers::NONE
+            }
+        );
+
+        assert_eq!(
+            str::parse::<KeyEvent>("{").unwrap(),
+            KeyEvent {
+                code: KeyCode::Char('{'),
+                modifiers: KeyModifiers::NONE
+            }
+        );
+
+        assert_eq!(
+            str::parse::<KeyEvent>("}").unwrap(),
+            KeyEvent {
+                code: KeyCode::Char('}'),
+                modifiers: KeyModifiers::NONE
+            }
+        ); 
+
+        assert_eq!(
+            str::parse::<KeyEvent>("[").unwrap(),
+            KeyEvent {
+                code: KeyCode::Char('['),
+                modifiers: KeyModifiers::NONE
+            }
+        );
+
+        assert_eq!(
+            str::parse::<KeyEvent>("]").unwrap(),
+            KeyEvent {
+                code: KeyCode::Char(']'),
                 modifiers: KeyModifiers::NONE
             }
         );
