@@ -159,30 +159,19 @@ pub(crate) mod keys {
     pub(crate) const ISO_LEVEL_3_SHIFT: &str = "isolevel3shift";
     pub(crate) const ISO_LEVEL_5_SHIFT: &str = "isolevel5shift";
 
-    pub(crate) const LEFT_BRACKET: &str = "lbracket";
-    pub(crate) const RIGHT_BRACKET: &str = "rbracket";
+    pub(crate) const LEFT_SQUARE_BRACKET: &str = "bracketleft";
+    pub(crate) const RIGHT_SQUARE_BRACKET: &str = "bracketright";
 }
 
 impl fmt::Display for KeyEvent {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!(
             "{}{}{}",
-            if self.modifiers.contains(KeyModifiers::SHIFT) {
-                "S-"
-            } else {
-                ""
-            },
-            if self.modifiers.contains(KeyModifiers::ALT) {
-                "A-"
-            } else {
-                ""
-            },
-            if self.modifiers.contains(KeyModifiers::CONTROL) {
-                "C-"
-            } else {
-                ""
-            },
+            if self.modifiers.contains(KeyModifiers::SHIFT) { "S-" } else { "" },
+            if self.modifiers.contains(KeyModifiers::ALT) { "A-" } else { "" },
+            if self.modifiers.contains(KeyModifiers::CONTROL) { "C-" } else { "" },
         ))?;
+
         match self.code {
             KeyCode::Backspace => f.write_str(keys::BACKSPACE)?,
             KeyCode::Enter => f.write_str(keys::ENTER)?,
@@ -204,8 +193,8 @@ impl fmt::Display for KeyEvent {
             KeyCode::Char('<') => f.write_str(keys::LESS_THAN)?,
             KeyCode::Char('>') => f.write_str(keys::GREATER_THAN)?,
 
-            KeyCode::Char('[') => f.write_str(keys::LEFT_BRACKET)?,
-            KeyCode::Char(']') => f.write_str(keys::RIGHT_BRACKET)?,
+            KeyCode::Char('[') => f.write_str(keys::LEFT_SQUARE_BRACKET)?,
+            KeyCode::Char(']') => f.write_str(keys::RIGHT_SQUARE_BRACKET)?,
 
             // KeyCode::Char('{') => f.write_str(keys::LEFT_BRACE)?,
             // KeyCode::Char('}') => f.write_str(keys::RIGHT_BRACE)?,

@@ -6,6 +6,8 @@ use helix_core::hashmap;
 
 pub fn default() -> HashMap<Mode, KeyTrie> {
     let normal = keymap!({ "Normal mode"
+
+
         "h" | "left" => move_char_left,
         "j" | "down" => move_visual_line_down,
         "k" | "up" => move_visual_line_up,
@@ -141,6 +143,7 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
         "n" => search_next,
         "N" => search_prev,
         "*" => search_selection,
+
 
         "u" => undo,
         "U" => redo,
@@ -332,6 +335,11 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
 
         "C-a" => increment,
         "C-x" => decrement,
+
+        // Todo: Make user configurable
+        "{" => goto_prev_paragraph,
+        "}" => goto_next_paragraph,
+
     });
     let mut select = normal.clone();
     select.merge_nodes(keymap!({ "Select mode"
